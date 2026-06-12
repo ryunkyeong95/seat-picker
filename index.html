@@ -96,12 +96,28 @@ p {
     justify-content: flex-start;
   }
 }
+
+#resetBtn {
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #e74c3c;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#resetBtn:hover {
+  opacity: 0.9;
+}
 </style>
 </head>
 
 <body>
 
 <h1>🍻 회식 자리 뽑기</h1>
+<button id="resetBtn">관리자 초기화</button>
 <p>원하는 자리를 선택해주세요.</p>
 
 <div class="seating-map">
@@ -164,7 +180,9 @@ import {
   doc,
   setDoc,
   collection,
-  onSnapshot
+  onSnapshot,
+  getDocs,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -225,6 +243,32 @@ seats.forEach((seat) => {
 
     alert("자리 선택 완료!");
   });
+});
+
+document
+  .getElementById("resetBtn")
+  .addEventListener("click", async () => {
+
+    const password = prompt("관리자 비밀번호를 입력하세요.");
+
+    if (password !== "kumon2026") {
+      alert("비밀번호가 틀렸습니다.");
+      return;
+    }
+
+    const snapshot = await getDocs(
+      collection(db, "seats")
+    );
+
+    for (const item of snapshot.docs) {
+      await deleteDoc(item.ref);
+    }
+
+    localStorage.removeItem("myName");
+
+    alert("전체 자리가 초기화되었습니다.");
+
+    location.reload();
 });
 </script>
 
