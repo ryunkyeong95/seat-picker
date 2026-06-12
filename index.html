@@ -54,16 +54,19 @@ p {
 
 .long-table {
   height: 150px;
-
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:42px;
   background:
-  linear-gradient(
-    90deg,
-    #8b5a2b,
-    #a97142,
-    #8b5a2b
-  );
+linear-gradient(
+  90deg,
+  #f4e2c7,
+  #f8ead6,
+  #f4e2c7
+);
 
-  border: 3px solid #6d4421;
+  border: 3px solid #d8b98c;
 
   border-radius: 18px;
 
@@ -85,7 +88,7 @@ p {
 
 .seat {
 
-  background: #4caf50;
+  background: #ff8fb1;
 
   color: white;
 
@@ -157,7 +160,9 @@ p {
       <div class="seat" data-seat-id="seat-3">3</div>
       <div class="seat" data-seat-id="seat-4">4</div>
     </div>
-    <div class="long-table"></div>
+    <div class="long-table">
+        🥩 🍺 🍻 🥬
+    </div>
     <div class="seat-row bottom">
       <div class="seat" data-seat-id="seat-5">5</div>
       <div class="seat" data-seat-id="seat-6">6</div>
@@ -242,7 +247,7 @@ onSnapshot(collection(db, "seats"), (snapshot) => {
 
     if (data.name === myName) {
       seat.textContent = data.name;
-      seat.style.background = "#2196F3";
+      seat.style.background = "#ff4f87";
     } else {
       seat.textContent = "선택됨";
       seat.style.background = "#999";
