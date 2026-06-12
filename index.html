@@ -369,6 +369,11 @@
 
                 if (!name) return;
 
+                if (name.length > 4) {
+                    alert("이름은 4글자 이하로 입력해주세요.");
+                    return;
+                }
+
                 const alreadyExists = Object.values(selectedSeats).includes(name);
 
                 if (alreadyExists) {
