@@ -140,14 +140,30 @@ linear-gradient(
 #resetBtn:hover {
   opacity: 0.9;
 }
+
+#adminModeBtn {
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #8e44ad;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#adminModeBtn:hover {
+  opacity: 0.9;
+}
+
 </style>
 </head>
 
 <body>
 
 <h1>🍻 회식 자리 뽑기</h1>
-<button id="resetBtn" style="display:none;">
-  관리자 초기화
+<button id="adminModeBtn" style="display:none;">
+  관리자 모드
 </button>
 <p>원하는 자리를 선택해주세요.</p>
 
@@ -288,7 +304,7 @@ document
 
     const password = prompt("관리자 비밀번호를 입력하세요.");
 
-    if (password !== "kumon2026") {
+    if (password !== "fbsrud12@@") {
       alert("비밀번호가 틀렸습니다.");
       return;
     }
@@ -317,12 +333,52 @@ document.querySelector("h1").addEventListener("click", () => {
   if (titleClickCount >= 5) {
 
     document.getElementById("resetBtn").style.display = "inline-block";
+    document.getElementById("adminModeBtn").style.display = "inline-block";
 
     alert("관리자 메뉴가 열렸습니다.");
 
     titleClickCount = 0;
   }
 });
+
+let isAdminMode = false;
+
+document
+  .getElementById("adminModeBtn")
+  .addEventListener("click", () => {
+    const password = prompt("관리자 비밀번호를 입력하세요.");
+
+    if (password !== "kumon2026") {
+      alert("비밀번호가 틀렸습니다.");
+      return;
+    }
+
+    isAdminMode = !isAdminMode;
+
+    seats.forEach((seat) => {
+      const seatId = seat.dataset.seatId;
+      const name = selectedSeats[seatId];
+
+      if (!name) return;
+
+      if (isAdminMode) {
+        seat.textContent = name;
+        seat.style.background = "#8e44ad";
+      } else {
+        const myName = localStorage.getItem("myName");
+
+        if (name === myName) {
+          seat.textContent = name;
+          seat.style.background = "#ff4f87";
+        } else {
+          seat.textContent = "선택됨";
+          seat.style.background = "#999";
+        }
+      }
+    });
+
+    alert(isAdminMode ? "관리자 모드가 켜졌습니다." : "관리자 모드가 꺼졌습니다.");
+  });
 </script>
 
 </body>
