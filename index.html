@@ -83,6 +83,34 @@
             align-items: center;
         }
 
+        .pillar-seat {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            background: #6b5b53;
+            color: white;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            box-shadow:
+                inset 0 0 0 3px rgba(255, 255, 255, 0.25),
+                0 3px 6px rgba(0, 0, 0, 0.18);
+
+            cursor: not-allowed;
+        }
+
+        .pillar-seat span {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
         .seat {
 
             background: #ff8fb1;
@@ -190,7 +218,10 @@
 
         <div class="table-block">
             <div class="seat-row">
-                <div class="seat" data-seat-id="seat-9">9</div>
+                <div class="pillar-seat">
+                    🏛️
+                    <span>기둥</span>
+                </div>
                 <div class="seat" data-seat-id="seat-10">10</div>
                 <div class="seat" data-seat-id="seat-11">11</div>
                 <div class="seat" data-seat-id="seat-12">12</div>
@@ -199,7 +230,10 @@
                 🥩 🍺 🍻 🥬
             </div>
             <div class="seat-row bottom">
-                <div class="seat" data-seat-id="seat-13">13</div>
+                <div class="pillar-seat">
+                    🏛️
+                    <span>기둥</span>
+                </div>
                 <div class="seat" data-seat-id="seat-14">14</div>
                 <div class="seat" data-seat-id="seat-15">15</div>
                 <div class="seat" data-seat-id="seat-16">16</div>
