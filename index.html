@@ -284,8 +284,16 @@
                 const myName = localStorage.getItem("myName");
 
                 if (myName) {
-                    alert("이미 자리를 선택하셨습니다.");
-                    return;
+
+                    const stillExists =
+                        Object.values(selectedSeats).includes(myName);
+
+                    if (stillExists) {
+                        alert("이미 자리를 선택하셨습니다.");
+                        return;
+                    }
+
+                    localStorage.removeItem("myName");
                 }
 
                 if (selectedSeats[seatId]) {
