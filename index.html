@@ -1,385 +1,404 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회식 자리 뽑기</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회식 자리 뽑기</title>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(
-  180deg,
-  #fff8ef,
-  #f5efe5
-);
-  text-align: center;
-  padding: 30px;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg,
+                    #fff8ef,
+                    #f5efe5);
+            text-align: center;
+            padding: 30px;
+        }
 
-h1 {
-  margin-bottom: 8px;
-  color: #5b3d1c;
-  font-size: 42px;
-}
+        h1 {
+            margin-bottom: 8px;
+            color: #5b3d1c;
+            font-size: 42px;
+        }
 
-p {
-  color: #8a6a45;
-  font-size: 18px;
-}
+        p {
+            color: #8a6a45;
+            font-size: 18px;
+        }
 
-.seating-map {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0;
-  overflow-x: auto;
-  padding: 20px 0;
-}
+        .seating-map {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
 
-.table-block {
-  width: 430px;
-  flex-shrink: 0;
-}
+        .table-block {
+            width: 430px;
+            flex-shrink: 0;
+        }
 
-.seat-row {
-  display: flex;
-  justify-content: space-around;
-  margin: 0 0 14px;
-}
+        .seat-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 0 0 14px;
+        }
 
-.seat-row.bottom {
-  margin: 14px 0 0;
-}
+        .seat-row.bottom {
+            margin: 14px 0 0;
+        }
 
-.long-table {
-  height: 150px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:42px;
-  background:
-linear-gradient(
-  90deg,
-  #f4e2c7,
-  #f8ead6,
-  #f4e2c7
-);
+        .long-table {
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 42px;
+            background:
+                linear-gradient(90deg,
+                    #f4e2c7,
+                    #f8ead6,
+                    #f4e2c7);
 
-  border: 3px solid #d8b98c;
+            border: 3px solid #d8b98c;
 
-  border-radius: 18px;
+            border-radius: 18px;
 
-  box-shadow:
-    0 6px 15px rgba(0,0,0,.2);
-}
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, .2);
+        }
 
-.seat,
-.empty-seat {
-  width: 70px;
-  height: 70px;
-  border-radius: 14px;
-  font-weight: bold;
-  font-size: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        .seat,
+        .empty-seat {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.seat {
+        .seat {
 
-  background: #ff8fb1;
+            background: #ff8fb1;
 
-  color: white;
+            color: white;
 
-  cursor: pointer;
+            cursor: pointer;
 
-  transition: all .2s ease;
+            transition: all .2s ease;
 
-  box-shadow:
-    0 4px 10px rgba(0,0,0,.18);
-}
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, .18);
+        }
 
-.seat:hover {
+        .seat:hover {
 
-  transform:
-    translateY(-4px)
-    scale(1.05);
-}
+            transform:
+                translateY(-4px) scale(1.05);
+        }
 
-.empty-seat {
-  background: #ddd;
-  color: #777;
-  flex-direction: column;
-  font-size: 22px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
-}
+        .empty-seat {
+            background: #ddd;
+            color: #777;
+            flex-direction: column;
+            font-size: 22px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+        }
 
-.empty-seat span {
-  font-size: 13px;
-  margin-top: 4px;
-}
+        .empty-seat span {
+            font-size: 13px;
+            margin-top: 4px;
+        }
 
-@media (max-width: 900px) {
-  .seating-map {
-    justify-content: flex-start;
-  }
-}
+        @media (max-width: 900px) {
+            .seating-map {
+                justify-content: flex-start;
+            }
+        }
 
-#resetBtn {
-  margin-bottom: 20px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #e74c3c;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
+        #resetBtn {
+            margin-bottom: 20px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #e74c3c;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-#resetBtn:hover {
-  opacity: 0.9;
-}
+        #resetBtn:hover {
+            opacity: 0.9;
+        }
 
-#adminModeBtn {
-  margin-bottom: 20px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #8e44ad;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
+        #adminModeBtn {
+            margin-bottom: 20px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #8e44ad;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-#adminModeBtn:hover {
-  opacity: 0.9;
-}
-
-</style>
+        #adminModeBtn:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>🍻 회식 자리 뽑기</h1>
-<button id="adminModeBtn" style="display:none;">
-  관리자 모드
-</button>
-<p>원하는 자리를 선택해주세요.</p>
+    <h1>🍻 회식 자리 뽑기</h1>
 
-<div class="seating-map">
+    <button id="resetBtn" style="display:none;">
+        관리자 초기화
+    </button>
 
-  <div class="table-block">
-    <div class="seat-row">
-      <div class="seat" data-seat-id="seat-1">1</div>
-      <div class="seat" data-seat-id="seat-2">2</div>
-      <div class="seat" data-seat-id="seat-3">3</div>
-      <div class="seat" data-seat-id="seat-4">4</div>
+    <button id="adminModeBtn" style="display:none;">
+        관리자 모드
+    </button>
+
+    <p>원하는 자리를 선택해주세요.</p>
+
+    <div class="seating-map">
+
+        <div class="table-block">
+            <div class="seat-row">
+                <div class="seat" data-seat-id="seat-1">1</div>
+                <div class="seat" data-seat-id="seat-2">2</div>
+                <div class="seat" data-seat-id="seat-3">3</div>
+                <div class="seat" data-seat-id="seat-4">4</div>
+            </div>
+            <div class="long-table">
+                🥩 🍺 🍻 🥬
+            </div>
+            <div class="seat-row bottom">
+                <div class="seat" data-seat-id="seat-5">5</div>
+                <div class="seat" data-seat-id="seat-6">6</div>
+                <div class="seat" data-seat-id="seat-7">7</div>
+                <div class="seat" data-seat-id="seat-8">8</div>
+            </div>
+        </div>
+
+        <div class="table-block">
+            <div class="seat-row">
+                <div class="seat" data-seat-id="seat-9">9</div>
+                <div class="seat" data-seat-id="seat-10">10</div>
+                <div class="seat" data-seat-id="seat-11">11</div>
+                <div class="seat" data-seat-id="seat-12">12</div>
+            </div>
+            <div class="long-table">
+                🥩 🍺 🍻 🥬
+            </div>
+            <div class="seat-row bottom">
+                <div class="seat" data-seat-id="seat-13">13</div>
+                <div class="seat" data-seat-id="seat-14">14</div>
+                <div class="seat" data-seat-id="seat-15">15</div>
+                <div class="seat" data-seat-id="seat-16">16</div>
+            </div>
+        </div>
+
+        <div class="table-block">
+            <div class="seat-row">
+                <div class="seat" data-seat-id="seat-17">17</div>
+                <div class="seat" data-seat-id="seat-18">18</div>
+                <div class="seat" data-seat-id="seat-19">19</div>
+                <div class="empty-seat">20<span>빈자리</span></div>
+            </div>
+            <div class="long-table">
+                🥩 🍺 🍻 🥬
+            </div>
+            <div class="seat-row bottom">
+                <div class="seat" data-seat-id="seat-21">21</div>
+                <div class="seat" data-seat-id="seat-22">22</div>
+                <div class="seat" data-seat-id="seat-23">23</div>
+                <div class="empty-seat">24<span>빈자리</span></div>
+            </div>
+        </div>
+
     </div>
-    <div class="long-table">
-        🥩 🍺 🍻 🥬
-    </div>
-    <div class="seat-row bottom">
-      <div class="seat" data-seat-id="seat-5">5</div>
-      <div class="seat" data-seat-id="seat-6">6</div>
-      <div class="seat" data-seat-id="seat-7">7</div>
-      <div class="seat" data-seat-id="seat-8">8</div>
-    </div>
-  </div>
 
-  <div class="table-block">
-    <div class="seat-row">
-      <div class="seat" data-seat-id="seat-9">9</div>
-      <div class="seat" data-seat-id="seat-10">10</div>
-      <div class="seat" data-seat-id="seat-11">11</div>
-      <div class="seat" data-seat-id="seat-12">12</div>
-    </div>
-    <div class="long-table">
-        🥩 🍺 🍻 🥬
-    </div>
-    <div class="seat-row bottom">
-      <div class="seat" data-seat-id="seat-13">13</div>
-      <div class="seat" data-seat-id="seat-14">14</div>
-      <div class="seat" data-seat-id="seat-15">15</div>
-      <div class="seat" data-seat-id="seat-16">16</div>
-    </div>
-  </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-  <div class="table-block">
-    <div class="seat-row">
-      <div class="seat" data-seat-id="seat-17">17</div>
-      <div class="seat" data-seat-id="seat-18">18</div>
-      <div class="seat" data-seat-id="seat-19">19</div>
-      <div class="empty-seat">20<span>빈자리</span></div>
-    </div>
-    <div class="long-table">
-        🥩 🍺 🍻 🥬
-    </div>
-    <div class="seat-row bottom">
-      <div class="seat" data-seat-id="seat-21">21</div>
-      <div class="seat" data-seat-id="seat-22">22</div>
-      <div class="seat" data-seat-id="seat-23">23</div>
-      <div class="empty-seat">24<span>빈자리</span></div>
-    </div>
-  </div>
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            collection,
+            onSnapshot,
+            getDocs,
+            deleteDoc
+        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-</div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAvpfJGYP5wmuhIsW2dFxO7Cu1fUZOsCjw",
+            authDomain: "seat-picker-fdea4.firebaseapp.com",
+            projectId: "seat-picker-fdea4",
+            storageBucket: "seat-picker-fdea4.firebasestorage.app",
+            messagingSenderId: "366627890858",
+            appId: "1:366627890858:web:a19f63ca2225afbc88d2d3"
+        };
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  collection,
-  onSnapshot,
-  getDocs,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        const seats = document.querySelectorAll(".seat");
+        const selectedSeats = {};
+        let isAdminMode = false;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAvpfJGYP5wmuhIsW2dFxO7Cu1fUZOsCjw",
-  authDomain: "seat-picker-fdea4.firebaseapp.com",
-  projectId: "seat-picker-fdea4",
-  storageBucket: "seat-picker-fdea4.firebasestorage.app",
-  messagingSenderId: "366627890858",
-  appId: "1:366627890858:web:a19f63ca2225afbc88d2d3"
-};
+        onSnapshot(collection(db, "seats"), (snapshot) => {
+            snapshot.forEach((docItem) => {
+                const seatId = docItem.id;
+                const data = docItem.data();
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+                selectedSeats[seatId] = data.name;
 
-const seats = document.querySelectorAll(".seat");
-const selectedSeats = {};
+                const seat = document.querySelector(`[data-seat-id="${seatId}"]`);
+                if (!seat) return;
 
-onSnapshot(collection(db, "seats"), (snapshot) => {
-  snapshot.forEach((docItem) => {
-    const seatId = docItem.id;
-    const data = docItem.data();
+                const myName = localStorage.getItem("myName");
 
-    selectedSeats[seatId] = data.name;
+                if (data.name === myName) {
+                    seat.textContent = data.name;
+                    seat.style.background = "#ff4f87";
+                } else {
+                    seat.textContent = "선택됨";
+                    seat.style.background = "#999";
+                }
+            });
+        });
 
-    const seat = document.querySelector(`[data-seat-id="${seatId}"]`);
-    if (!seat) return;
+        seats.forEach((seat) => {
+            seat.addEventListener("click", async () => {
+                const seatId = seat.dataset.seatId;
 
-    const myName = localStorage.getItem("myName");
+                const myName = localStorage.getItem("myName");
 
-    if (data.name === myName) {
-      seat.textContent = data.name;
-      seat.style.background = "#ff4f87";
-    } else {
-      seat.textContent = "선택됨";
-      seat.style.background = "#999";
-    }
-  });
-});
+                if (myName) {
+                    alert("이미 자리를 선택하셨습니다.");
+                    return;
+                }
 
-seats.forEach((seat) => {
-  seat.addEventListener("click", async () => {
-    const seatId = seat.dataset.seatId;
+                if (selectedSeats[seatId]) {
+                    alert("이미 선택된 자리입니다.");
+                    return;
+                }
 
-    if (selectedSeats[seatId]) {
-      alert("이미 선택된 자리입니다.");
-      return;
-    }
+                const name = prompt("이름을 입력해주세요.")?.trim();
 
-    const name = prompt("이름을 입력해주세요.");
+                if (!name) return;
 
-    if (!name) return;
+                const alreadyExists = Object.values(selectedSeats).includes(name);
 
-    localStorage.setItem("myName", name);
+                if (alreadyExists) {
+                    alert("이미 사용 중인 이름입니다.");
+                    return;
+                }
 
-    await setDoc(doc(db, "seats", seatId), {
-      name: name
-    });
+                localStorage.setItem("myName", name);
 
-    alert("자리 선택 완료!");
-  });
-});
+                await setDoc(doc(db, "seats", seatId), {
+                    name: name
+                });
 
-document
-  .getElementById("resetBtn")
-  .addEventListener("click", async () => {
+                alert("자리 선택 완료!");
+            });
+        });
 
-    const password = prompt("관리자 비밀번호를 입력하세요.");
+        document
+            .getElementById("resetBtn")
+            .addEventListener("click", async () => {
 
-    if (password !== "fbsrud12@@") {
-      alert("비밀번호가 틀렸습니다.");
-      return;
-    }
+                const password = prompt("관리자 비밀번호를 입력하세요.");
 
-    const snapshot = await getDocs(
-      collection(db, "seats")
-    );
+                if (password !== "fbsrud12@@") {
+                    alert("비밀번호가 틀렸습니다.");
+                    return;
+                }
 
-    for (const item of snapshot.docs) {
-      await deleteDoc(item.ref);
-    }
+                const snapshot = await getDocs(
+                    collection(db, "seats")
+                );
 
-    localStorage.removeItem("myName");
+                for (const item of snapshot.docs) {
+                    await deleteDoc(item.ref);
+                }
 
-    alert("전체 자리가 초기화되었습니다.");
+                localStorage.removeItem("myName");
 
-    location.reload();
-});
+                alert("전체 자리가 초기화되었습니다.");
 
-let titleClickCount = 0;
+                location.reload();
+            });
 
-document.querySelector("h1").addEventListener("click", () => {
+        let titleClickCount = 0;
 
-  titleClickCount++;
+        document.querySelector("h1").addEventListener("click", () => {
 
-  if (titleClickCount >= 5) {
+            titleClickCount++;
 
-    document.getElementById("resetBtn").style.display = "inline-block";
-    document.getElementById("adminModeBtn").style.display = "inline-block";
+            if (titleClickCount >= 5) {
 
-    alert("관리자 메뉴가 열렸습니다.");
+                document.getElementById("resetBtn").style.display = "inline-block";
+                document.getElementById("adminModeBtn").style.display = "inline-block";
 
-    titleClickCount = 0;
-  }
-});
+                alert("관리자 메뉴가 열렸습니다.");
 
-let isAdminMode = false;
+                titleClickCount = 0;
+            }
+        });
 
-document
-  .getElementById("adminModeBtn")
-  .addEventListener("click", () => {
-    const password = prompt("관리자 비밀번호를 입력하세요.");
 
-    if (password !== "kumon2026") {
-      alert("비밀번호가 틀렸습니다.");
-      return;
-    }
+        document
+            .getElementById("adminModeBtn")
+            .addEventListener("click", () => {
+                const password = prompt("관리자 비밀번호를 입력하세요.");
 
-    isAdminMode = !isAdminMode;
+                if (password !== "fbsrud12@@") {
+                    alert("비밀번호가 틀렸습니다.");
+                    return;
+                }
 
-    seats.forEach((seat) => {
-      const seatId = seat.dataset.seatId;
-      const name = selectedSeats[seatId];
+                isAdminMode = !isAdminMode;
 
-      if (!name) return;
+                seats.forEach((seat) => {
+                    const seatId = seat.dataset.seatId;
+                    const name = selectedSeats[seatId];
 
-      if (isAdminMode) {
-        seat.textContent = name;
-        seat.style.background = "#8e44ad";
-      } else {
-        const myName = localStorage.getItem("myName");
+                    if (!name) return;
 
-        if (name === myName) {
-          seat.textContent = name;
-          seat.style.background = "#ff4f87";
-        } else {
-          seat.textContent = "선택됨";
-          seat.style.background = "#999";
-        }
-      }
-    });
+                    if (isAdminMode) {
+                        seat.textContent = name;
+                        seat.style.background = "#8e44ad";
+                    } else {
+                        const myName = localStorage.getItem("myName");
 
-    alert(isAdminMode ? "관리자 모드가 켜졌습니다." : "관리자 모드가 꺼졌습니다.");
-  });
-</script>
+                        if (isAdminMode) {
+                            seat.textContent = data.name;
+                            seat.style.background = "#8e44ad";
+                        } else if (data.name === myName) {
+                            seat.textContent = data.name;
+                            seat.style.background = "#ff4f87";
+                        } else {
+                            seat.textContent = "선택됨";
+                            seat.style.background = "#999";
+                        }
+                    }
+                });
+
+                alert(isAdminMode ? "관리자 모드가 켜졌습니다." : "관리자 모드가 꺼졌습니다.");
+            });
+    </script>
 
 </body>
+
 </html>
