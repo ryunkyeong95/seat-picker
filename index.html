@@ -226,9 +226,9 @@
                     🏛️
                     <span>기둥</span>
                 </div>
+                <div class="seat" data-seat-id="seat-9">9</div>
                 <div class="seat" data-seat-id="seat-10">10</div>
                 <div class="seat" data-seat-id="seat-11">11</div>
-                <div class="seat" data-seat-id="seat-12">12</div>
             </div>
             <div class="long-table">🥩 🍺 🍻 🥬</div>
             <div class="seat-row bottom">
@@ -236,24 +236,24 @@
                     🏛️
                     <span>기둥</span>
                 </div>
+                <div class="seat" data-seat-id="seat-12">12</div>
+                <div class="seat" data-seat-id="seat-13">13</div>
                 <div class="seat" data-seat-id="seat-14">14</div>
-                <div class="seat" data-seat-id="seat-15">15</div>
-                <div class="seat" data-seat-id="seat-16">16</div>
             </div>
         </div>
 
         <div class="table-block">
             <div class="seat-row">
+                <div class="seat" data-seat-id="seat-15">15</div>
+                <div class="seat" data-seat-id="seat-16">16</div>
                 <div class="seat" data-seat-id="seat-17">17</div>
-                <div class="seat" data-seat-id="seat-18">18</div>
-                <div class="seat" data-seat-id="seat-19">19</div>
                 <div class="empty-seat">20<span>빈자리</span></div>
             </div>
             <div class="long-table">🥩 🍺 🍻 🥬</div>
             <div class="seat-row bottom">
-                <div class="seat" data-seat-id="seat-21">21</div>
-                <div class="seat" data-seat-id="seat-22">22</div>
-                <div class="seat" data-seat-id="seat-23">23</div>
+                <div class="seat" data-seat-id="seat-18">18</div>
+                <div class="seat" data-seat-id="seat-19">19</div>
+                <div class="seat" data-seat-id="seat-20">20</div>
                 <div class="empty-seat">24<span>빈자리</span></div>
             </div>
         </div>
@@ -289,10 +289,13 @@
         const selectedSeats = {};
         let isAdminMode = false;
 
+        seats.forEach((seat) => {
+            seat.dataset.originalText = seat.textContent;
+        });
+
         function resetSeatDisplay() {
             seats.forEach((seat) => {
-                const seatNumber = seat.dataset.seatId.replace("seat-", "");
-                seat.textContent = seatNumber;
+                seat.textContent = seat.dataset.originalText;
                 seat.style.background = "#ff8fb1";
             });
         }
