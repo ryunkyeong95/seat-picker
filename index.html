@@ -9,9 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(180deg,
-                    #fff8ef,
-                    #f5efe5);
+            background: linear-gradient(180deg, #fff8ef, #f5efe5);
             text-align: center;
             padding: 30px;
         }
@@ -25,6 +23,33 @@
         p {
             color: #8a6a45;
             font-size: 18px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #b9770e;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .guide-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8a6a45;
+        }
+
+        ol {
+            display: inline-block;
+            text-align: left;
+            color: #8a6a45;
+            font-size: 16px;
+        }
+
+        .warning {
+            color: #c0392b;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.7;
         }
 
         .seating-map {
@@ -57,78 +82,35 @@
             justify-content: center;
             align-items: center;
             font-size: 42px;
-            background:
-                linear-gradient(90deg,
-                    #f4e2c7,
-                    #f8ead6,
-                    #f4e2c7);
-
+            background: linear-gradient(90deg, #f4e2c7, #f8ead6, #f4e2c7);
             border: 3px solid #d8b98c;
-
             border-radius: 18px;
-
-            box-shadow:
-                0 6px 15px rgba(0, 0, 0, .2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, .2);
         }
 
         .seat,
-        .empty-seat {
-            width: 70px;
-            height: 70px;
-            border-radius: 14px;
-            font-weight: bold;
-            font-size: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .empty-seat,
         .pillar-seat {
             width: 70px;
             height: 70px;
             border-radius: 14px;
-
+            font-weight: bold;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-
-            background: #6b5b53;
-            color: white;
-
-            font-size: 12px;
-            font-weight: bold;
-
-            box-shadow:
-                inset 0 0 0 3px rgba(255, 255, 255, 0.25),
-                0 3px 6px rgba(0, 0, 0, 0.18);
-
-            cursor: not-allowed;
-        }
-
-        .pillar-seat span {
-            font-size: 11px;
-            margin-top: 2px;
         }
 
         .seat {
-
             background: #ff8fb1;
-
             color: white;
-
             cursor: pointer;
-
             transition: all .2s ease;
-
-            box-shadow:
-                0 4px 10px rgba(0, 0, 0, .18);
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .18);
         }
 
         .seat:hover {
-
-            transform:
-                translateY(-4px) scale(1.05);
+            transform: translateY(-4px) scale(1.05);
         }
 
         .empty-seat {
@@ -144,38 +126,48 @@
             margin-top: 4px;
         }
 
+        .pillar-seat {
+            background: #6b5b53;
+            color: white;
+            flex-direction: column;
+            font-size: 12px;
+            box-shadow:
+                inset 0 0 0 3px rgba(255, 255, 255, 0.25),
+                0 3px 6px rgba(0, 0, 0, 0.18);
+            cursor: not-allowed;
+        }
+
+        .pillar-seat span {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
         @media (max-width: 900px) {
             .seating-map {
                 justify-content: flex-start;
             }
         }
 
-        #resetBtn {
-            margin-bottom: 20px;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 8px;
-            background: #e74c3c;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #resetBtn:hover {
-            opacity: 0.9;
-        }
-
+        #resetBtn,
         #adminModeBtn {
             margin-bottom: 20px;
             padding: 10px 16px;
             border: none;
             border-radius: 8px;
-            background: #8e44ad;
             color: white;
             cursor: pointer;
             font-weight: bold;
         }
 
+        #resetBtn {
+            background: #e74c3c;
+        }
+
+        #adminModeBtn {
+            background: #8e44ad;
+        }
+
+        #resetBtn:hover,
         #adminModeBtn:hover {
             opacity: 0.9;
         }
@@ -194,7 +186,21 @@
         관리자 모드
     </button>
 
-    <p>원하는 자리를 선택해주세요.</p>
+    <p class="subtitle">⏰ 선착순 선택</p>
+
+    <p class="guide-title">📌 이용 방법</p>
+
+    <ol>
+        <li>앉고 싶은 자리를 클릭해주세요.</li>
+        <li>이름을 입력하면 자리 선택이 완료됩니다.</li>
+    </ol>
+
+    <p class="warning">
+        ※ 회색 좌석은 이미 선택된 자리입니다.<br>
+        ※ 한 사람당 1개의 자리만 선택 가능합니다.<br>
+        ※ 이미 선택된 자리는 선택할 수 없습니다.<br>
+        ※ 선택 후 변경이 어려우니 신중하게 선택해주세요.
+    </p>
 
     <div class="seating-map">
 
@@ -205,9 +211,7 @@
                 <div class="seat" data-seat-id="seat-3">3</div>
                 <div class="seat" data-seat-id="seat-4">4</div>
             </div>
-            <div class="long-table">
-                🥩 🍺 🍻 🥬
-            </div>
+            <div class="long-table">🥩 🍺 🍻 🥬</div>
             <div class="seat-row bottom">
                 <div class="seat" data-seat-id="seat-5">5</div>
                 <div class="seat" data-seat-id="seat-6">6</div>
@@ -226,9 +230,7 @@
                 <div class="seat" data-seat-id="seat-11">11</div>
                 <div class="seat" data-seat-id="seat-12">12</div>
             </div>
-            <div class="long-table">
-                🥩 🍺 🍻 🥬
-            </div>
+            <div class="long-table">🥩 🍺 🍻 🥬</div>
             <div class="seat-row bottom">
                 <div class="pillar-seat">
                     🏛️
@@ -247,9 +249,7 @@
                 <div class="seat" data-seat-id="seat-19">19</div>
                 <div class="empty-seat">20<span>빈자리</span></div>
             </div>
-            <div class="long-table">
-                🥩 🍺 🍻 🥬
-            </div>
+            <div class="long-table">🥩 🍺 🍻 🥬</div>
             <div class="seat-row bottom">
                 <div class="seat" data-seat-id="seat-21">21</div>
                 <div class="seat" data-seat-id="seat-22">22</div>
@@ -289,38 +289,57 @@
         const selectedSeats = {};
         let isAdminMode = false;
 
-        onSnapshot(collection(db, "seats"), (snapshot) => {
-            snapshot.forEach((docItem) => {
-                const seatId = docItem.id;
-                const data = docItem.data();
+        function resetSeatDisplay() {
+            seats.forEach((seat) => {
+                const seatNumber = seat.dataset.seatId.replace("seat-", "");
+                seat.textContent = seatNumber;
+                seat.style.background = "#ff8fb1";
+            });
+        }
 
-                selectedSeats[seatId] = data.name;
+        function renderSeats() {
+            resetSeatDisplay();
 
-                const seat = document.querySelector(`[data-seat-id="${seatId}"]`);
-                if (!seat) return;
+            seats.forEach((seat) => {
+                const seatId = seat.dataset.seatId;
+                const name = selectedSeats[seatId];
+
+                if (!name) return;
 
                 const myName = localStorage.getItem("myName");
 
-                if (data.name === myName) {
-                    seat.textContent = data.name;
+                if (isAdminMode) {
+                    seat.textContent = name;
+                    seat.style.background = "#8e44ad";
+                } else if (name === myName) {
+                    seat.textContent = name;
                     seat.style.background = "#ff4f87";
                 } else {
                     seat.textContent = "선택됨";
                     seat.style.background = "#999";
                 }
             });
+        }
+
+        onSnapshot(collection(db, "seats"), (snapshot) => {
+            Object.keys(selectedSeats).forEach((key) => {
+                delete selectedSeats[key];
+            });
+
+            snapshot.forEach((docItem) => {
+                selectedSeats[docItem.id] = docItem.data().name;
+            });
+
+            renderSeats();
         });
 
         seats.forEach((seat) => {
             seat.addEventListener("click", async () => {
                 const seatId = seat.dataset.seatId;
-
                 const myName = localStorage.getItem("myName");
 
                 if (myName) {
-
-                    const stillExists =
-                        Object.values(selectedSeats).includes(myName);
+                    const stillExists = Object.values(selectedSeats).includes(myName);
 
                     if (stillExists) {
                         alert("이미 자리를 선택하셨습니다.");
@@ -359,7 +378,6 @@
         document
             .getElementById("resetBtn")
             .addEventListener("click", async () => {
-
                 const password = prompt("관리자 비밀번호를 입력하세요.");
 
                 if (password !== "fbsrud12@@") {
@@ -367,9 +385,7 @@
                     return;
                 }
 
-                const snapshot = await getDocs(
-                    collection(db, "seats")
-                );
+                const snapshot = await getDocs(collection(db, "seats"));
 
                 for (const item of snapshot.docs) {
                     await deleteDoc(item.ref);
@@ -385,11 +401,9 @@
         let titleClickCount = 0;
 
         document.querySelector("h1").addEventListener("click", () => {
-
             titleClickCount++;
 
             if (titleClickCount >= 5) {
-
                 document.getElementById("resetBtn").style.display = "inline-block";
                 document.getElementById("adminModeBtn").style.display = "inline-block";
 
@@ -398,7 +412,6 @@
                 titleClickCount = 0;
             }
         });
-
 
         document
             .getElementById("adminModeBtn")
@@ -411,31 +424,7 @@
                 }
 
                 isAdminMode = !isAdminMode;
-
-                seats.forEach((seat) => {
-                    const seatId = seat.dataset.seatId;
-                    const name = selectedSeats[seatId];
-
-                    if (!name) return;
-
-                    if (isAdminMode) {
-                        seat.textContent = name;
-                        seat.style.background = "#8e44ad";
-                    } else {
-                        const myName = localStorage.getItem("myName");
-
-                        if (isAdminMode) {
-                            seat.textContent = data.name;
-                            seat.style.background = "#8e44ad";
-                        } else if (data.name === myName) {
-                            seat.textContent = data.name;
-                            seat.style.background = "#ff4f87";
-                        } else {
-                            seat.textContent = "선택됨";
-                            seat.style.background = "#999";
-                        }
-                    }
-                });
+                renderSeats();
 
                 alert(isAdminMode ? "관리자 모드가 켜졌습니다." : "관리자 모드가 꺼졌습니다.");
             });
