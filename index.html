@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회식 자리 뽑기</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f7fb;
+  text-align: center;
+  padding: 30px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 70px;
+}
+
+.seating-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.table-block {
+  width: 430px;
+  flex-shrink: 0;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 0 14px;
+}
+
+.seat-row.bottom {
+  margin: 14px 0 0;
+}
+
+.long-table {
+  height: 150px;
+  background: linear-gradient(90deg, #f5c77a, #f9d998, #f5c77a);
+  border: 2px solid #9b6a2f;
+  border-radius: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.seat,
+.empty-seat {
+  width: 70px;
+  height: 70px;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.18);
+}
+
+.seat:hover {
+  transform: translateY(-3px);
+}
+
+.empty-seat {
+  background: #ddd;
+  color: #777;
+  flex-direction: column;
+  font-size: 22px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+.empty-seat span {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .seating-map {
+    justify-content: flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍻 회식 자리 뽑기</h1>
+<p>원하는 자리를 선택해주세요.</p>
+
+<div class="seating-map">
+
+  <div class="table-block">
+    <div class="seat-row">
+      <div class="seat" data-seat-id="seat-1">1</div>
+      <div class="seat" data-seat-id="seat-2">2</div>
+      <div class="seat" data-seat-id="seat-3">3</div>
+      <div class="seat" data-seat-id="seat-4">4</div>
+    </div>
+    <div class="long-table"></div>
+    <div class="seat-row bottom">
+      <div class="seat" data-seat-id="seat-5">5</div>
+      <div class="seat" data-seat-id="seat-6">6</div>
+      <div class="seat" data-seat-id="seat-7">7</div>
+      <div class="seat" data-seat-id="seat-8">8</div>
+    </div>
+  </div>
+
+  <div class="table-block">
+    <div class="seat-row">
+      <div class="seat" data-seat-id="seat-9">9</div>
+      <div class="seat" data-seat-id="seat-10">10</div>
+      <div class="seat" data-seat-id="seat-11">11</div>
+      <div class="seat" data-seat-id="seat-12">12</div>
+    </div>
+    <div class="long-table"></div>
+    <div class="seat-row bottom">
+      <div class="seat" data-seat-id="seat-13">13</div>
+      <div class="seat" data-seat-id="seat-14">14</div>
+      <div class="seat" data-seat-id="seat-15">15</div>
+      <div class="seat" data-seat-id="seat-16">16</div>
+    </div>
+  </div>
+
+  <div class="table-block">
+    <div class="seat-row">
+      <div class="seat" data-seat-id="seat-17">17</div>
+      <div class="seat" data-seat-id="seat-18">18</div>
+      <div class="seat" data-seat-id="seat-19">19</div>
+      <div class="empty-seat">20<span>빈자리</span></div>
+    </div>
+    <div class="long-table"></div>
+    <div class="seat-row bottom">
+      <div class="seat" data-seat-id="seat-21">21</div>
+      <div class="seat" data-seat-id="seat-22">22</div>
+      <div class="seat" data-seat-id="seat-23">23</div>
+      <div class="empty-seat">24<span>빈자리</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvpfJGYP5wmuhIsW2dFxO7Cu1fUZOsCjw",
+  authDomain: "seat-picker-fdea4.firebaseapp.com",
+  projectId: "seat-picker-fdea4",
+  storageBucket: "seat-picker-fdea4.firebasestorage.app",
+  messagingSenderId: "366627890858",
+  appId: "1:366627890858:web:a19f63ca2225afbc88d2d3"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const seats = document.querySelectorAll(".seat");
+const selectedSeats = {};
+
+onSnapshot(collection(db, "seats"), (snapshot) => {
+  snapshot.forEach((docItem) => {
+    const seatId = docItem.id;
+    const data = docItem.data();
+
+    selectedSeats[seatId] = data.name;
+
+    const seat = document.querySelector(`[data-seat-id="${seatId}"]`);
+    if (!seat) return;
+
+    const myName = localStorage.getItem("myName");
+
+    if (data.name === myName) {
+      seat.textContent = data.name;
+      seat.style.background = "#2196F3";
+    } else {
+      seat.textContent = "선택됨";
+      seat.style.background = "#999";
+    }
+  });
+});
+
+seats.forEach((seat) => {
+  seat.addEventListener("click", async () => {
+    const seatId = seat.dataset.seatId;
+
+    if (selectedSeats[seatId]) {
+      alert("이미 선택된 자리입니다.");
+      return;
+    }
+
+    const name = prompt("이름을 입력해주세요.");
+
+    if (!name) return;
+
+    localStorage.setItem("myName", name);
+
+    await setDoc(doc(db, "seats", seatId), {
+      name: name
+    });
+
+    alert("자리 선택 완료!");
+  });
+});
+</script>
+
+</body>
+</html>
